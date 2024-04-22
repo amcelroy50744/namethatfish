@@ -1,13 +1,15 @@
+import { TUserScore } from "./FunctionalApp";
 import "./styles/final-score.css";
-const correctCount = 0;
-const totalCount = 0;
-export const FunctionalFinalScore = () => (
+
+export const FunctionalFinalScore = (userScore: {
+  userScore: TUserScore | null;
+}) => (
   <div id="final-score">
     <h1>Your Final Score Was</h1>
     <div id="score">
-      <p>{correctCount}</p>
+      <p>{userScore.userScore?.correct}</p>
       <hr />
-      <p>{totalCount}</p>
+      <p>{userScore.userScore?.totalScore}</p>
     </div>
   </div>
 );

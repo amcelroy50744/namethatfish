@@ -1,22 +1,26 @@
+import { TUserScore } from "./FunctionalApp";
+import { initialFishes } from "./FunctionalGameBoard";
 import "./styles/score-board.css";
 //  Where the score is presented
 
-const incorrectCount = 0;
-const correctCount = 0;
-const answersLeft = ["trout", "salmon", "tuna", "shark"];
-
-export function FunctionalScoreBoard() {
+export function FunctionalScoreBoard({
+  userScore,
+}: {
+  userScore: TUserScore | null;
+}) {
+  const correct = userScore?.correct || 0;
+  const incorrect = userScore?.incorrect || 0;
   return (
     <div id="score-board">
-      <div>Incorrect 🔻: {incorrectCount}</div>
+      <div>Incorrect 🔻: {incorrect}</div>
       <div id="choices-left">
-        {answersLeft.map((answer) => (
-          <div key={answer} className="choice">
-            {answer}
+        {initialFishes.map((answer) => (
+          <div key={answer.name} className="choice">
+            {answer.name}
           </div>
         ))}
       </div>
-      <div>Correct ✅: {correctCount}</div>
+      <div>Correct ✅: {correct}</div>
     </div>
   );
 }
