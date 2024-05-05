@@ -1,12 +1,12 @@
-import { TUserScore } from "./FunctionalApp";
-import { initialFishes } from "./FunctionalGameBoard";
+import { TUserScore } from "../../types";
 import "./styles/score-board.css";
-//  Where the score is presented
 
 export function FunctionalScoreBoard({
   userScore,
+  answersLeft,
 }: {
-  userScore: TUserScore | null;
+  userScore: TUserScore;
+  answersLeft: string[];
 }) {
   const correct = userScore?.correct || 0;
   const incorrect = userScore?.incorrect || 0;
@@ -14,9 +14,9 @@ export function FunctionalScoreBoard({
     <div id="score-board">
       <div>Incorrect 🔻: {incorrect}</div>
       <div id="choices-left">
-        {initialFishes.map((answer) => (
-          <div key={answer.name} className="choice">
-            {answer.name}
+        {answersLeft.map((answer) => (
+          <div key={answer} className="choice">
+            {answer}
           </div>
         ))}
       </div>

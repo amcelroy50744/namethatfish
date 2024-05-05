@@ -1,69 +1,35 @@
 import "./styles/game-board.css";
-import { Images } from "../../assets/Images";
-import { useState } from "react";
-import { TUserScore } from "./FunctionalApp";
+import { FormEvent, useState } from "react";
+import { TFish } from "../../types";
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const initialFishes = [
-  {
-    name: "trout",
-    url: Images.trout,
-  },
-  {
-    name: "salmon",
-    url: Images.salmon,
-  },
-  {
-    name: "tuna",
-    url: Images.tuna,
-  },
-  {
-    name: "shark",
-    url: Images.shark,
-  },
-];
-const correctList: string[] = [];
-const incorrect: string[] = [];
 export function FunctionalGameBoard({
-  userScore,
+  fishData,
+  setUserScore,
 }: {
-  userScore: (score: TUserScore) => void;
+  fishData: TFish;
+  setUserScore: (propName: string) => void;
 }) {
-  let nextFishToName = initialFishes[0];
   const [userInput, setUserInput] = useState("");
-  return (
+
+  const handleAnswer = (answer: string) => {
+    const propertyToUpdate: string =
+      fishData.name === answer ? "correct" : "incorrect";
+    setUserScore(propertyToUpdate);
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    handleAnswer(userInput);
+    setUserInput("");
+  }
+    return (
     <div id="game-board">
       <div id="fish-container">
-        <img src={nextFishToName.url} alt={nextFishToName.name} />
+        <img src={fishData.url} alt={fishData.name} />
       </div>
       <form
         id="fish-guess-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setUserInput("");
-          if (nextFishToName.name === userInput) {
-            correctList.push(nextFishToName.name);
-          } else {
-            incorrect.push(nextFishToName.name);
-          }
-          userScore({
-            correct: correctList.length,
-            incorrect: incorrect.length,
-            gameOver: false,
-            totalScore: correctList.length + incorrect.length,
-          });
-          if (correctList.length + incorrect.length <= 3) {
-            initialFishes.splice(0, 1);
-            nextFishToName = initialFishes[0];
-          } else {
-            userScore({
-              correct: correctList.length,
-              incorrect: incorrect.length,
-              gameOver: true,
-              totalScore: correctList.length + incorrect.length,
-            });
-          }
-        }}
+    onSubmit={handleSubmit}
       >
         <label htmlFor="fish-guess">What kind of fish is this?</label>
         <input

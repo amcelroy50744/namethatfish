@@ -2,21 +2,19 @@ import { Component } from "react";
 import { ClassScoreBoard } from "./ClassScoreBoard";
 import { ClassGameBoard } from "./ClassGameBoard";
 import { ClassFinalScore } from "./ClassFinalScore";
-import { TUserScore } from "../Functional/FunctionalApp";
-
+import { TUserScore } from "../../types";
 export class ClassApp extends Component {
   state: TUserScore = {
     correct: 0,
     incorrect: 0,
-    gameOver: false,
-    totalScore: 0,
   };
-   
+
   render() {
-    const {gameOver} = this.state;
+    const fishIndexClass: number = this.state.correct + this.state.incorrect;
+    const isGameOver: boolean = fishIndexClass >= 4;
     return (
       <>
-        {gameOver ? (
+        {isGameOver ? (
           <ClassFinalScore userScore={this.state} />
         ) : (
           <>

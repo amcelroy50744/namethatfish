@@ -1,26 +1,8 @@
 import { Component } from "react";
 import "./styles/game-board.css";
-import { Images } from "../../assets/Images";
-import { TUserScore } from "../Functional/FunctionalApp";
+import { TUserScore } from "../../types";
+import { initialFishes } from "../../constants/fishData";
 
-export const initialFishesClass = [
-  {
-    name: "trout",
-    url: Images.trout,
-  },
-  {
-    name: "salmon",
-    url: Images.salmon,
-  },
-  {
-    name: "tuna",
-    url: Images.tuna,
-  },
-  {
-    name: "shark",
-    url: Images.shark,
-  },
-];
 const correctList: string[] = [];
 const incorrectList: string[] = [];
 type State = {
@@ -39,7 +21,7 @@ export class ClassGameBoard extends Component<
     this.setState({ userInput: e.currentTarget.value });
   };
   render() {
-    let nextFishToName = initialFishesClass[0];
+    let nextFishToName = initialFishes[0];
 
     return (
       <div id="game-board">
@@ -59,19 +41,15 @@ export class ClassGameBoard extends Component<
             this.userScore({
               correct: correctList.length,
               incorrect: incorrectList.length,
-              gameOver: false,
-              totalScore: correctList.length + incorrectList.length,
             });
 
             if (correctList.length + incorrectList.length <= 3) {
-              initialFishesClass.splice(0, 1);
-              nextFishToName = initialFishesClass[0];
+              initialFishes.splice(0, 1);
+              nextFishToName = initialFishes[0];
             } else {
               this.userScore({
                 correct: correctList.length,
                 incorrect: incorrectList.length,
-                gameOver: true,
-                totalScore: correctList.length + incorrectList.length,
               });
             }
           }}
